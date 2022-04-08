@@ -30,4 +30,13 @@ public class User {
     @Column(name = "active")
     private int active;
 
+    public User(User users) {
+        this.id = users.getId();
+        this.email = users.getEmail();
+        this.firstName = users.getFirstName();
+        this.lastName = users.getLastName();
+        this.userName = users.getUserName();
+        this.password = users.getPassword();
+        this.active = users.getActive();
+    }
 }
