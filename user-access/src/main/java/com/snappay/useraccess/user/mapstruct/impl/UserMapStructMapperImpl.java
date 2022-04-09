@@ -1,11 +1,12 @@
 package com.snappay.useraccess.user.mapstruct.impl;
 
 import com.snappay.useraccess.role.dto.RoleResponseDTO;
+import com.snappay.useraccess.role.mapstruct.RoleMapStruct;
 import com.snappay.useraccess.role.model.Role;
 import com.snappay.useraccess.user.dto.UserRequestDTO;
 import com.snappay.useraccess.user.dto.UserResponseDTO;
-import com.snappay.useraccess.user.model.User;
 import com.snappay.useraccess.user.mapstruct.UserMapStructMapper;
+import com.snappay.useraccess.user.model.User;
 
 import javax.annotation.Generated;
 import java.util.HashSet;
@@ -17,6 +18,12 @@ import java.util.Set;
         comments = "version: 1.4.2.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 public class UserMapStructMapperImpl implements UserMapStructMapper {
+
+    private final RoleMapStruct roleMApStruct;
+
+    public UserMapStructMapperImpl(RoleMapStruct roleMApStruct) {
+        this.roleMApStruct = roleMApStruct;
+    }
 
     @Override
     public UserResponseDTO userToUserResponse(User user) {
@@ -39,22 +46,6 @@ public class UserMapStructMapperImpl implements UserMapStructMapper {
         return null;
     }
 
-    @Override
-    public RoleResponseDTO roleToRoleResponse(Role role) {
-        if (role == null)
-            return null;
-        RoleResponseDTO roleResponseDTO = new RoleResponseDTO();
-
-        roleResponseDTO.setId(role.getId());
-        roleResponseDTO.setRole(role.getRole());
-        return roleResponseDTO;
-    }
-
-    @Override
-    public Role roleResponseToRole(RoleResponseDTO roleResponseDTO) {
-        return null;
-    }
-
     protected Set<RoleResponseDTO> setRoleToSetRoleResponse(Set<Role> roles) {
         if (roles == null) {
             return null;
@@ -62,7 +53,8 @@ public class UserMapStructMapperImpl implements UserMapStructMapper {
 
         Set<RoleResponseDTO> setRoleResponseDTO = new HashSet<RoleResponseDTO>();
         for (Role role : roles) {
-            setRoleResponseDTO.add(roleToRoleResponse(role));
+            setRoleResponseDTO.add(
+                    roleMApStruct.roleToRoleResponse(role));
         }
 
         return setRoleResponseDTO;
